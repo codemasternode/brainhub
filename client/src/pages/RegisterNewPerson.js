@@ -1,28 +1,33 @@
 import React from 'react'
-import { Container, TextField, Button } from '@material-ui/core'
+import { Container, TextField, Button, Snackbar } from '@material-ui/core'
+import { Alert } from '@material-ui/lab'
 import "./registerNewPerson.css"
 import Axios from 'axios'
+
+const date = new Date()
+date.setHours(date.getHours() + 2)
 
 class RegisterNewPerson extends React.Component {
     state = {
         form: {
             firstname: {
-                value: "",
+                value: "Marcin",
                 error: ""
             },
             lastname: {
-                value: "",
+                value: "Warzybok",
                 error: ""
             },
             email: {
-                value: "",
+                value: "marcinwarz@outlook.com",
                 error: ""
             },
             eventDate: {
-                value: new Date().toISOString().substring(0, 19),
+                value: date.toISOString().substring(0, 19),
                 error: ""
             }
-        }
+        },
+        isSuccessMessageVisible: false
     }
 
     onInputChange = (e) => {
@@ -47,6 +52,16 @@ class RegisterNewPerson extends React.Component {
         })
     }
 
+    clearFields = () => {
+        const form = { ...this.state.form }
+        for (let keyInForm in form) {
+            form[keyInForm].value = ""
+        }
+        this.setState({
+            form
+        })
+    }
+
     onFormSubmit = (e) => {
         e.preventDefault();
         this.clearErrors()
@@ -60,7 +75,10 @@ class RegisterNewPerson extends React.Component {
                 eventDate: this.state.form.eventDate.value
             }
         }).then((response) => {
-            console.log(response)
+            this.clearFields()
+            this.setState({
+                isSuccessMessageVisible: true
+            })
         }).catch(err => {
             const form = { ...this.state.form }
             for (let keyInError in err.response.data.errorResponse) {
@@ -73,6 +91,12 @@ class RegisterNewPerson extends React.Component {
             this.setState({
                 form
             })
+        })
+    }
+
+    handleSuccessMessageClose = () => {
+        this.setState({
+            isSuccessMessageVisible: false
         })
     }
 
@@ -124,9 +148,15 @@ class RegisterNewPerson extends React.Component {
                         className="input-form"
                     />
                     <br />
-                    <Button type="submit" variant="contained" color="secondary">
+
+                    <Button type="submit" variant="contained" color="secondary" style={{marginTop: 50}}>
                         Send
                     </Button>
+                    <Snackbar open={this.state.isSuccessMessageVisible} onClose={this.handleSuccessMessageClose}>
+                        <Alert onClose={this.handleSuccessMessageClose} severity="success">
+                            Succesfuly added person
+                        </Alert>
+                    </Snackbar>
                 </form>
 
             </Container>
