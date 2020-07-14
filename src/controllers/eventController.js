@@ -1,6 +1,7 @@
 import Person from '../models/person'
 
 export async function registerNewPerson(req, res) {
+    
     try {
         const person = await Person.create({ ...req.body })
         return res.send({person})

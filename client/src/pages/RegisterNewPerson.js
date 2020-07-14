@@ -11,15 +11,15 @@ class RegisterNewPerson extends React.Component {
     state = {
         form: {
             firstname: {
-                value: "Marcin",
+                value: "",
                 error: ""
             },
             lastname: {
-                value: "Warzybok",
+                value: "",
                 error: ""
             },
             email: {
-                value: "marcinwarz@outlook.com",
+                value: "",
                 error: ""
             },
             eventDate: {
