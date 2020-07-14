@@ -1,0 +1,23 @@
+.main {
+    height: 90vh;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.main form {
+    border: 1px solid lightgray;
+    padding: 3em 5em 3em 5em;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main button {
+    margin-top: 50px;
+}
+
+.input-form {
+    height: 70px;
+}
