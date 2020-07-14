@@ -4,9 +4,13 @@ import mongodbConnection from "./config/db";
 import eventRoute from './routes/eventRoute';
 import path from 'path';
 
-
-const PORT = process.env.PORT || 5000,
+const ENV = process.env.NODE_ENV
+let PORT = process.env.PORT || 5000,
     MONGO_DB_URL = process.env.MONGO_DB_URL || "mongodb://localhost:27017/eventDB"
+if (ENV === "test") {
+    MONGO_DB_URL = "mongodb://localhost:27017/tests"
+}
+
 
 const app = express();
 app.use(express.static(path.join(__dirname, '../client/build')));
@@ -22,9 +26,9 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Application is running on port ${PORT}`);
 });
 
 
-export default server;
+export default app;
