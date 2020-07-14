@@ -2,8 +2,8 @@ import Person from '../models/person'
 
 export async function registerNewPerson(req, res) {
     try {
-        const pereson = await Person.create({ ...req.body })
-        return res.send({pereson})
+        const person = await Person.create({ ...req.body })
+        return res.send({person})
     } catch (err) {
         const errorResponse = {}
         for(let key in err.errors) {

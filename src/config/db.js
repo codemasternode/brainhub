@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
-export default URI => {
+export default (URI, done) => {
   const dbOptions = {
     poolSize: 4,
     useNewUrlParser: true,
@@ -14,6 +14,9 @@ export default URI => {
       throw new Error(`Error while trying to connect MongoDB ${err}`);
     }
     console.log(`Connected to MongoDB`);
+    if (process.env.NODE_ENV === "test") {
+      done()
+    }
   });
 
 };
